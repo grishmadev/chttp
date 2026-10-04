@@ -1,8 +1,8 @@
 compile:
-	gcc -o main main.c
+	gcc -o build/main src/main.c
 
 clean:
-	rm -f main
+	rm -f build/main
 
 run: compile
-	./main
+	build/main
