@@ -1,5 +1,4 @@
 #include "handler.c"
-#include "parse/parse.c"
 #include <asm-generic/socket.h>
 #include <bits/pthreadtypes.h>
 #include <netinet/in.h>
@@ -22,10 +21,6 @@ int main(int argc, char const *argv[]) {
   setsockopt(s, SOL_SOCKET, SO_REUSEADDR, &opt, sizeof(opt));
 
   struct timeval tv = {.tv_sec = 5, .tv_usec = 0};
-
-  Response success = {1, "Hello"};
-  char *serMsg = parse_success(&success);
-  printf("repsonse: %s\n", serMsg);
 
   struct sockaddr_in serv;
   serv.sin_family = AF_INET;

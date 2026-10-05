@@ -1,9 +1,11 @@
 #include "headers.c"
+#include "parse/parse.c"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 int handle_client(void *arg) {
-  char serMsg[255] = "Hello World";
+  Response success = {1, "Hello"};
+  char *serMsg = parse_success(&success);
   char content_length[16];
   snprintf(content_length, sizeof(content_length), "%zu", strlen(serMsg));
   int csock = *(int *)arg;
@@ -18,7 +20,7 @@ int handle_client(void *arg) {
     }
 
     Header headers[] = {
-        {"Content-Type", "text/html"},
+        {"Content-Type", "application/json"},
         {"Content-Length", content_length},
         {"Connection", "keep-alive"},
     };

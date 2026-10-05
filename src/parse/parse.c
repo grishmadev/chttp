@@ -6,11 +6,14 @@
 char *parse_success(const Response *res) {
   char *success = res->success ? "true" : "false";
   char *message = res->message;
-  size_t total_size = strlen("{\"success\":") + strlen(success) +
-                      strlen(",\"message\":") + strlen(message) + strlen("\"}");
+  int len = snprintf(NULL, 0, "{\"success\": %s, \"message\": \"%s\"}", success,
+                     message);
+  // +1 for null terminator
+  size_t total_size = (size_t)len + 1;
   char *msg = malloc(total_size);
-  char *ptr = msg;
-  snprintf(ptr, total_size, "{\n\"success\": %s,\"message\":\"%s\"", success,
+  if (!msg)
+    return NULL;
+  snprintf(msg, total_size, "{\"success\": %s, \"message\": \"%s\"}", success,
            message);
   return msg;
 }
